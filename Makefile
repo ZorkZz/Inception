@@ -1,17 +1,15 @@
 all: 
-	@docker compose -f ./srcs/docker-compose.yml up
+	mkdir -p srcs/html
+	@sudo docker compose -f ./srcs/docker-compose.yml up
 
 down:
-	@docker compose -f ./srcs/docker-compose.yml down
+	@sudo docker compose -f ./srcs/docker-compose.yml down
 
-re:
-	@docker compose -f srcs/docker-compose.yml up --build
+re: clean
+	mkdir -p srcs/html
+	@sudo docker compose -f srcs/docker-compose.yml up --build
 
-# clean:
-# 	@docker stop $$(docker ps -qa);\
-# 	docker rm $$(docker ps -qa);\
-# 	docker rmi -f $$(docker images -qa);\
-# 	docker volume rm $$(docker volume ls -q);\
-# 	docker network rm $$(docker network ls -q);\
+clean:
+	sudo rm -rf srcs/html
 
 .PHONY: all re down clean
