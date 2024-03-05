@@ -7,11 +7,12 @@ EXPOSE 443
 
 
 COPY ./conf/default /etc/nginx/sites-enabled/default
-COPY ./start/nginx_start.sh /var/www/
 
 
-RUN chmod +x /var/www/nginx_start.sh
+RUN openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes \
+       -out /etc/ssl/nginx.crt \
+       -keyout /etc/ssl/nginx.key \
+       -subj "/C=FR/ST=Lyon/L=Lyon/O=42 School/OU=astachni/CN=astachni/"
 
-ENTRYPOINT [ "/var/www/nginx_start.sh" ]
 
 CMD ["nginx", "-g", "daemon off;"]
