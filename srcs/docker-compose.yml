@@ -1,0 +1,39 @@
+version: '3.8'
+
+networks:
+  app-network:
+    name: app-network
+    driver: bridge
+
+volumes:
+  website:
+    driver: local
+    name: wp
+    driver_opts:
+      type: none
+      o: bind
+      device: ./www
+
+services:
+
+  nginx:
+    container_name: nginx
+    build: ./nginx
+    ports:
+      - "443:443"
+    restart: always
+    depends_on:
+      - wordpress
+    networks:
+      - app-network
+    volumes:
+      - website:/var/www
+
+  wordpress:
+    container_name: wordpress
+    build: ./wordpress
+    restart: always
+    networks:
+      - app-network
+    volumes:
+      - website:/var/www
