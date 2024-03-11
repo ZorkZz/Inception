@@ -14,6 +14,9 @@ clean:
 	sudo rm -rf srcs/html
 	sudo rm -rf srcs/sql
 
+build:
+	sudo docker compose -f ./srcs/docker-compose.yml build --no-cache
+
 re: delete all
 
 .PHONY: all re down clean delete

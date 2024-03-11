@@ -7,7 +7,7 @@ EXPOSE 9000
 
 COPY ./conf/www.conf /etc/php/8.2/fpm/pool.d
 
-COPY ./tools/ /var/www/
+COPY ./tools/wordpress_start.sh /var/www/wordpress_start.sh
 
 
 RUN chmod 777 /var/www/wordpress_start.sh

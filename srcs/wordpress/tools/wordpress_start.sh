@@ -5,10 +5,8 @@
 	chown -R 777 /var/www/*;
 	mkdir -p /run/php/;
 	touch /run/php/php7.4-fpm.pid;
-	rm -rf /var/www/html/*
 
 
-if [ ! -f /var/www/html/wp-config.php ]; then
 	echo "Wordpress: setting up..."
 	mkdir -p /var/www/html
 	wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar;
@@ -16,11 +14,14 @@ if [ ! -f /var/www/html/wp-config.php ]; then
 	mv wp-cli.phar /usr/local/bin/wp;
 	cd /var/www/html;
 	wp core download --allow-root;
-	cp /var/www/wp-config.php /var/www/html/
 	echo "Wordpress: creating users..."
-	wp core install --allow-root --url=${Domain_name} --title=${WP_TITLE} --admin_user=${WP_ADMIN_LOGIN} --admin_password=${WP_ADMIN_PASSWORD} --admin_email=${WP_ADMIN_EMAIL}
+	
+	wp config create --allow-root --dbname=wordpress --dbuser=astachni --dbpass=67 --dbhost=mariadb --locale=fr_FR
+	
+	wp core install --allow-root --url=astachni.42.fr --title=${WP_TITLE} --admin_user=${WP_ADMIN_LOGIN} --admin_password=${WP_ADMIN_PASSWORD} --admin_email=${WP_ADMIN_EMAIL}
+	
+
 	wp user create --allow-root ${WP_USER_LOGIN} ${WP_USER_EMAIL} --user_pass=${WP_USER_PASSWORD};
 	echo "Wordpress: set up!"
-fi
 
 exec "$@"
