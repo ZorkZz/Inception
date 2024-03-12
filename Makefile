@@ -1,4 +1,4 @@
-start: 
+all: 
 	@mkdir -p /home/astachni/data/html
 	@mkdir -p /home/astachni/data/mariadb
 	@sudo docker compose -f ./srcs/docker-compose.yml up
@@ -7,18 +7,19 @@ down:
 	@sudo docker compose -f ./srcs/docker-compose.yml down
 
 
-delete: clean
+clean: delete
 	@sudo docker compose -f ./srcs/docker-compose.yml down -v
 
-clean:
+delete:
 	@sudo rm -rf /home/astachni/data/html
 	@sudo rm -rf /home/astachni/data/mariadb
+	@sudo docker system prune -a
 
 build:
 	@mkdir -p /home/astachni/data/html
 	@mkdir -p /home/astachni/data/mariadb
 	@sudo docker compose -f ./srcs/docker-compose.yml build
 
-re: delete build all
+re: clean build all
 
 .PHONY: all re down clean delete
