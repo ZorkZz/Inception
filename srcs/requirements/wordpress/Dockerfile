@@ -5,7 +5,7 @@ RUN apt-get -y install php php-mysqli php-fpm wget sendmail mariadb-client && rm
 
 EXPOSE 9000
 
-COPY ./conf/www.conf /etc/php/8.2/fpm/pool.d
+COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d
 
 COPY ./tools/wordpress_start.sh /var/www/wordpress_start.sh
 

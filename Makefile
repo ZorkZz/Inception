@@ -1,6 +1,6 @@
-all: 
-	mkdir -p srcs/html
-	mkdir -p srcs/sql
+start: 
+	@mkdir -p /home/astachni/data/html
+	@mkdir -p /home/astachni/data/mariadb
 	@sudo docker compose -f ./srcs/docker-compose.yml up
 
 down:
@@ -11,12 +11,14 @@ delete: clean
 	@sudo docker compose -f ./srcs/docker-compose.yml down -v
 
 clean:
-	sudo rm -rf srcs/html
-	sudo rm -rf srcs/sql
+	@sudo rm -rf /home/astachni/data/html
+	@sudo rm -rf /home/astachni/data/mariadb
 
 build:
-	sudo docker compose -f ./srcs/docker-compose.yml build --no-cache
+	@mkdir -p /home/astachni/data/html
+	@mkdir -p /home/astachni/data/mariadb
+	@sudo docker compose -f ./srcs/docker-compose.yml build
 
-re: delete all
+re: delete build all
 
 .PHONY: all re down clean delete

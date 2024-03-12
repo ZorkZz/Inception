@@ -12,7 +12,7 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: ./html
+      device: /home/astachni/data/html
 
   mdb:
     driver: local
@@ -20,13 +20,13 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: ./sql
+      device: /home/astachni/data/mariadb
 
 services:
 
   mariadb:
     container_name: mariadb
-    build: ./mariadb
+    build: ./requirements/mariadb
     volumes:
       - mdb:/var/lib/mysql
       - wp:/var/www/html
@@ -38,7 +38,7 @@ services:
 
   wordpress:
     container_name: wordpress
-    build: ./wordpress
+    build: ./requirements/wordpress
     depends_on:
       - mariadb
     volumes:
@@ -52,7 +52,7 @@ services:
 
   nginx:
     container_name: nginx
-    build: ./nginx
+    build: ./requirements/nginx
     ports:
       - "443:443"
     depends_on:
