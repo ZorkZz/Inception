@@ -22,6 +22,8 @@
 	
 
 	wp user create --allow-root ${WP_USER_LOGIN} ${WP_USER_EMAIL} --user_pass=${WP_USER_PASSWORD};
+	chown -R www-data:www-data /var/www/*;
+
 	echo "Wordpress: set up!"
 
 exec "$@"
